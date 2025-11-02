@@ -49,7 +49,7 @@
       
       <div class="transformation-cta fade-in" :class="{ visible: isVisible }">
         <p>Готов стать следующим в этом списке?</p>
-        <button class="btn btn-primary" @click="scrollToContact">
+        <button class="btn btn-primary" @click="openTelegramChat">
           Начать трансформацию
         </button>
       </div>
@@ -112,14 +112,15 @@ const transformations: Transformation[] = [
   }
 ];
 
-const scrollToContact = () => {
-  const contactElement = document.getElementById('contact');
-  if (contactElement) {
-    contactElement.scrollIntoView({ behavior: 'smooth' });
-  }
+const openTelegramChat = () => {
+  window.open('https://t.me/Vladislav_Zankov', '_blank', 'noopener,noreferrer');
 };
 
 const observeSection = () => {
+  // Определяем настройки в зависимости от размера экрана
+  const isMobile = window.innerWidth <= 768;
+  const threshold = isMobile ? 0.05 : 0.1; // Меньший порог для мобильных
+  
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -128,7 +129,7 @@ const observeSection = () => {
         }
       });
     },
-    { threshold: 0.3 }
+    { threshold: threshold }
   );
 
   const section = document.querySelector('.transformations');
@@ -138,6 +139,12 @@ const observeSection = () => {
 onMounted(() => {
   setTimeout(() => {
     observeSection();
+    // Принудительно активируем на маленьких экранах
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        isVisible.value = true;
+      }, 500);
+    }
   }, 100);
 });
 </script>
@@ -329,8 +336,13 @@ onMounted(() => {
 /* Small tablets */
 @media (max-width: 900px) {
   .transformations-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr; /* Одна колонка на планшетах */
     gap: var(--space-lg);
+  }
+  
+  .transformation-card {
+    max-width: 500px; /* Больше места на планшетах */
+    margin: 0 auto;
   }
 }
 
@@ -356,12 +368,14 @@ onMounted(() => {
   }
   
   .transformations-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    grid-template-columns: 1fr; /* Одна колонка на мобильных */
+    gap: var(--space-xl);
     padding: 0 var(--space-lg);
   }
   
   .transformation-card {
+    max-width: 400px; /* Ограничиваем максимальную ширину */
+    margin: 0 auto; /* Центрируем карточки */
     padding: var(--space-xl);
     border-radius: 16px;
   }
@@ -424,14 +438,8 @@ onMounted(() => {
     padding: var(--space-xl) 0;
   }
   
-  .transformations-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    padding: 0 var(--space-md);
-  }
-  
   .section-header {
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-sm);
     margin-bottom: var(--space-xl);
   }
   
@@ -440,17 +448,22 @@ onMounted(() => {
   }
   
   .transformations-grid {
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-sm);
     gap: var(--space-lg);
   }
   
   .transformation-card {
-    padding: var(--space-lg);
+    padding: var(--space-md);
     border-radius: 12px;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .transformation-images {
+    gap: var(--space-sm);
   }
   
   .image-container {
-    max-width: 150px;
+    max-width: 140px; /* Уменьшаем размер изображений */
   }
   
   .transformation-info h3 {
@@ -462,6 +475,18 @@ onMounted(() => {
     line-height: 1.5;
   }
   
+  .transformation-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки для статистики */
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+  
+  .stat {
+    text-align: center;
+    padding: var(--space-xs);
+  }
+  
   .stat-value {
     font-size: 1.3rem;
   }
@@ -470,31 +495,14 @@ onMounted(() => {
     font-size: 0.85rem;
   }
   
-  .transformation-cta {
-    margin: 0 var(--space-lg);
-    padding: var(--space-xl);
-    border-radius: 16px;
+  .transformation-description {
+    font-size: 0.9rem;
+    margin-top: var(--space-md);
   }
   
-  .transformation-cta p {
-    font-size: 1.1rem;
-    margin-bottom: var(--space-md);
-    line-height: 1.4;
-    padding: 0 var(--space-sm);
-  }
-  
-  .transformation-cta .btn {
-    width: 100%;
-    max-width: 280px;
-    padding: var(--space-md) var(--space-lg);
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
   .transformation-cta {
-    margin: 0 var(--space-md);
-    padding: var(--space-lg);
+    margin: 0 var(--space-sm);
+    padding: var(--space-md);
     border-radius: 12px;
   }
   
@@ -509,6 +517,7 @@ onMounted(() => {
     font-size: 0.9rem;
     padding: var(--space-sm) var(--space-md);
     max-width: 240px;
+    width: 100%;
   }
 }
 </style>

@@ -42,7 +42,7 @@
         <h3>Не нашли ответ на свой вопрос?</h3>
         <p>Свяжитесь со мной напрямую, и я отвечу в течение часа</p>
         <div class="cta-buttons">
-          <button class="btn btn-primary" @click="openContactForm">
+          <button class="btn btn-primary" @click="openTelegramChat">
             Задать вопрос
           </button>
           <a href="tel:+79991234567" class="btn btn-secondary">
@@ -135,9 +135,8 @@ const toggleItem = (index: number) => {
   activeIndex.value = activeIndex.value === index ? null : index;
 };
 
-const openContactForm = () => {
-  // Логика открытия формы контактов
-  alert('Форма контактов будет реализована позже');
+const openTelegramChat = () => {
+  window.open('https://t.me/Vladislav_Zankov', '_blank', 'noopener,noreferrer');
 };
 
 const observeSection = () => {

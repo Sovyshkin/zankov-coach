@@ -43,56 +43,62 @@
           </button>
         </div>
         
-        <div class="mobile-nav-links">
-          <a href="#about" @click="scrollTo('about')" class="mobile-nav-link">
-            <span class="link-number">01</span>
-            <span class="link-text">О методе</span>
-            <span class="link-arrow">→</span>
-          </a>
-          <a href="#transformations" @click="scrollTo('transformations')" class="mobile-nav-link">
-            <span class="link-number">02</span>
-            <span class="link-text">Результаты</span>
-            <span class="link-arrow">→</span>
-          </a>
-          <a href="#services" @click="scrollTo('services')" class="mobile-nav-link">
-            <span class="link-number">03</span>
-            <span class="link-text">Услуги</span>
-            <span class="link-arrow">→</span>
-          </a>
-          <a href="#contact" @click="openTelegramChat" class="mobile-nav-link cta-link">
-            <span class="link-number">04</span>
-            <span class="link-text">Связаться</span>
-            <span class="link-arrow">→</span>
-          </a>
-        </div>
-        
-        <div class="mobile-menu-footer">
-          <div class="mobile-contact">
-            <div class="contact-item">
-              <span class="contact-label">Email</span>
-              <a href="mailto:info@zankovcoach.ru">info@zankovcoach.ru</a>
-            </div>
-            <div class="contact-item">
-              <span class="contact-label">Телефон</span>
-              <a href="tel:+79991234567">+7 (999) 123-45-67</a>
-            </div>
+        <div class="mobile-menu-body">
+          <div class="mobile-nav-links">
+            <a href="#about" @click="scrollTo('about')" class="mobile-nav-link">
+              <span class="link-number">01</span>
+              <span class="link-text">О методе</span>
+              <span class="link-arrow">→</span>
+            </a>
+            <a href="#transformations" @click="scrollTo('transformations')" class="mobile-nav-link">
+              <span class="link-number">02</span>
+              <span class="link-text">Результаты</span>
+              <span class="link-arrow">→</span>
+            </a>
+            <a href="#services" @click="scrollTo('services')" class="mobile-nav-link">
+              <span class="link-number">03</span>
+              <span class="link-text">Услуги</span>
+              <span class="link-arrow">→</span>
+            </a>
+            <a href="#contact" @click="openTelegramChat" class="mobile-nav-link cta-link">
+              <span class="link-number">04</span>
+              <span class="link-text">Связаться</span>
+              <span class="link-arrow">→</span>
+            </a>
           </div>
-          <div class="mobile-social">
+          
+          <div class="mobile-menu-footer">
+            <div class="mobile-contact">
+              <div class="contact-item">
+                <span class="contact-label">Email</span>
+                <a href="mailto:info@zankovcoach.ru">info@zankovcoach.ru</a>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">Телефон</span>
+                <a href="tel:+79022361129">+7 (902) 236-11-29</a>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">Адрес</span>
+                <span>Московское ш., 17, Самара<br>БЦ Вертикаль, этаж 3</span>
+              </div>
+            </div>
+            <div class="mobile-social">
             <a href="https://instagram.com/zankov_coach" target="_blank" rel="noopener noreferrer" class="mobile-social-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/>
                 <path d="m16 11.37 0 .63a4 4 0 1 1-1.26-2.74" stroke="currentColor" stroke-width="2" fill="none"/>
                 <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
               </svg>
-              <span>Instagram</span>
+              <span>@zankov_coach</span>
             </a>
             <a href="https://t.me/Vladislav_Zankov" target="_blank" rel="noopener noreferrer" class="mobile-social-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M21 5L2 12.5l7 1M21 5l-2.5 15L9.5 13.5M21 5L9.5 13.5m0 0V19l3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span>Telegram</span>
+              <span>@Vladislav_Zankov</span>
             </a>
           </div>
+          </div> <!-- Закрываем mobile-menu-body -->
         </div>
       </div>
     </div>
@@ -108,8 +114,8 @@
     </div>
 
     <!-- Transformations Section -->
-    <div class="transformations-wrapper fade-in" :class="{ visible: sectionsVisible.transformations }">
-      <TransformationsSection id="transformations" />
+    <div id="transformations" class="transformations-wrapper fade-in" :class="{ visible: sectionsVisible.transformations }">
+      <TransformationsSection />
     </div>
 
     <!-- Philosophy Section -->
@@ -484,6 +490,11 @@ const handleScroll = () => {
 };
 
 const observeSections = () => {
+  // Определяем настройки в зависимости от размера экрана
+  const isMobile = window.innerWidth <= 768;
+  const threshold = isMobile ? 0.05 : 0.1; // Меньший порог для мобильных
+  const rootMargin = isMobile ? '0px 0px -20px 0px' : '0px 0px -50px 0px'; // Меньший отступ для мобильных
+  
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -514,8 +525,8 @@ const observeSections = () => {
       });
     },
     { 
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: threshold,
+      rootMargin: rootMargin
     }
   );
 
@@ -523,7 +534,7 @@ const observeSections = () => {
   const elementsToObserve = [
     '.hero-wrapper',
     '.stats-wrapper', 
-    '.transformations-wrapper',
+    '#transformations',
     '#about',
     '.why-me-wrapper',
     '.testimonials-wrapper',
@@ -538,17 +549,67 @@ const observeSections = () => {
   });
 };
 
+// Fallback функция для проверки видимости элементов с дебаунсингом
+let checkVisibilityTimeout: number | null = null;
+
+const checkElementVisibility = () => {
+  if (checkVisibilityTimeout) return;
+  
+  checkVisibilityTimeout = window.setTimeout(() => {
+    const elements = [
+      { selector: '.hero-wrapper, #hero', key: 'hero' },
+      { selector: '.stats-wrapper, .stats', key: 'stats' },
+      { selector: '.transformations-wrapper, #transformations', key: 'transformations' },
+      { selector: '#about, .philosophy', key: 'philosophy' },
+      { selector: '.why-me-wrapper, .why-me', key: 'whyMe' },
+      { selector: '.testimonials-wrapper, .testimonials', key: 'testimonials' },
+      { selector: '#services, .services', key: 'services' },
+      { selector: '.faq-wrapper, .faq', key: 'faq' },
+      { selector: '#contact, .cta', key: 'cta' }
+    ];
+
+    elements.forEach(({ selector, key }) => {
+      if (sectionsVisible[key]) return; // Уже видимо
+      
+      const element = document.querySelector(selector);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const isMobile = window.innerWidth <= 768;
+        const threshold = isMobile ? 0.05 : 0.1;
+        
+        // Проверяем, виден ли элемент
+        if (rect.top < windowHeight * (1 - threshold) && rect.bottom > windowHeight * threshold) {
+          sectionsVisible[key] = true;
+        }
+      }
+    });
+    
+    checkVisibilityTimeout = null;
+  }, 50); // Дебаунс 50мс
+};
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   window.addEventListener('keydown', handleKeydown);
+  
+  // Добавляем fallback проверку при скролле
+  window.addEventListener('scroll', checkElementVisibility);
+  
   setTimeout(() => {
     observeSections();
+    // Проверяем видимость сразу после загрузки
+    checkElementVisibility();
+    // Принудительно показываем hero и transformations секции
+    sectionsVisible.hero = true;
+    sectionsVisible.transformations = true;
   }, 100);
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
   window.removeEventListener('keydown', handleKeydown);
+  window.removeEventListener('scroll', checkElementVisibility);
 });
 
 // Отслеживаем изменения состояния мобильного меню
@@ -1002,7 +1063,8 @@ img, video {
   opacity: 0;
   visibility: hidden;
   transition: all var(--transition-smooth);
-  overflow: hidden;
+  overflow-y: auto; /* Позволяем скролл */
+  overflow-x: hidden; /* Запрещаем горизонтальный скролл */
 }
 
 .mobile-menu-overlay::before {
@@ -1032,12 +1094,20 @@ img, video {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: var(--space-xl);
   position: relative;
   z-index: 1;
   transform: translateY(50px);
   transition: transform var(--transition-slow);
+  overflow-y: scroll; /* Скролл без видимой полосы */
+  -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+}
+
+/* Убираем скроллбары в Webkit браузерах */
+.mobile-menu-content::-webkit-scrollbar {
+  display: none;
 }
 
 .mobile-menu-overlay.active .mobile-menu-content {
@@ -1050,6 +1120,24 @@ img, video {
   align-items: center;
   padding: var(--space-lg) 0;
   border-bottom: 1px solid rgba(155, 255, 0, 0.2);
+  flex-shrink: 0; /* Заголовок не сжимается */
+}
+
+.mobile-menu-body {
+  flex: 1;
+  overflow-y: scroll; /* Скролл без видимой полосы */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  padding: var(--space-md) 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Позволяет контейнеру сжиматься */
+}
+
+/* Убираем скроллбары в Webkit браузерах */
+.mobile-menu-body::-webkit-scrollbar {
+  display: none;
 }
 
 .mobile-brand {
@@ -1115,12 +1203,12 @@ img, video {
 }
 
 .mobile-nav-links {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: var(--space-md);
-  padding: var(--space-3xl) 0;
+  padding: var(--space-xl) 0;
+  flex-shrink: 0; /* Не сжимается */
+  min-height: min-content; /* Обеспечивает достаточную высоту */
 }
 
 .mobile-nav-link {
@@ -1201,6 +1289,9 @@ img, video {
 .mobile-menu-footer {
   padding: var(--space-xl) 0;
   border-top: 1px solid rgba(155, 255, 0, 0.2);
+  margin-top: auto; /* Прижимаем к низу */
+  flex-shrink: 0; /* Не сжимается */
+  min-height: min-content; /* Обеспечивает достаточную высоту */
 }
 
 .mobile-contact {
@@ -1238,8 +1329,9 @@ img, video {
 
 .mobile-social {
   display: flex;
-  justify-content: center;
-  gap: var(--space-xl);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .mobile-social-link {
