@@ -569,7 +569,7 @@ const checkElementVisibility = () => {
     ];
 
     elements.forEach(({ selector, key }) => {
-      if (sectionsVisible[key]) return; // Уже видимо
+      if (sectionsVisible[key as keyof typeof sectionsVisible]) return; // Уже видимо
       
       const element = document.querySelector(selector);
       if (element) {
@@ -580,7 +580,7 @@ const checkElementVisibility = () => {
         
         // Проверяем, виден ли элемент
         if (rect.top < windowHeight * (1 - threshold) && rect.bottom > windowHeight * threshold) {
-          sectionsVisible[key] = true;
+          sectionsVisible[key as keyof typeof sectionsVisible] = true;
         }
       }
     });
