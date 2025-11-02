@@ -71,14 +71,6 @@ onMounted(() => {
   }, 300);
 });
 
-const scrollToContact = () => {
-  // Плавный скролл к форме контактов
-  const contactElement = document.getElementById('contact');
-  if (contactElement) {
-    contactElement.scrollIntoView({ behavior: 'smooth' });
-  }
-};
-
 const handleImageError = (event: Event) => {
   // Если изображение не загрузилось, показываем placeholder
   const img = event.target as HTMLImageElement;

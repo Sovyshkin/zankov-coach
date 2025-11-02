@@ -380,8 +380,8 @@ import FAQSection from '@/components/FAQSection.vue';
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
 const isVideoModalOpen = ref(false);
-const previewVideo = ref(null);
-const modalVideo = ref(null);
+const previewVideo = ref<HTMLVideoElement | null>(null);
+const modalVideo = ref<HTMLVideoElement | null>(null);
 
 const sectionsVisible = reactive({
   hero: false,
@@ -474,12 +474,8 @@ const onVideoLoaded = () => {
 
 // Keyboard event handler
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape') {
-    if (isVideoModalOpen.value) {
-      closeVideoModal();
-    } else if (isContactFormOpen.value) {
-      closeContactForm();
-    }
+  if (event.key === 'Escape' && isVideoModalOpen.value) {
+    closeVideoModal();
   }
 };
 

@@ -70,11 +70,13 @@ const observeStats = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const index = Array.from(entry.target.parentElement?.children || []).indexOf(entry.target as Element);
-          if (index !== -1 && !visibleStats.value[index]) {
+          if (index !== -1 && !visibleStats.value[index] && stats[index]) {
             visibleStats.value[index] = true;
             // Запуск анимации счетчика с задержкой
             setTimeout(() => {
-              animateNumber(stats[index].number, index);
+              if (stats[index]) {
+                animateNumber(stats[index].number, index);
+              }
             }, index * 100 + 200);
           }
         }
