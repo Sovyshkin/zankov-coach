@@ -1,0 +1,37 @@
+{
+  "name": "Владислав Заньков - Персональный Тренер",
+  "short_name": "ZankovCoach",
+  "description": "Персональный фитнес-тренер Владислав Заньков. Трансформация тела, онлайн коучинг, персональные тренировки.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#9BFF00",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-16x16.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon-32x32.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "fitness", "sports"],
+  "lang": "ru",
+  "scope": "/",
+  "screenshots": []
+}

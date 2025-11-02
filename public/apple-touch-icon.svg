@@ -1,0 +1,20 @@
+<!-- Apple Touch Icon 180x180 with site colors -->
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="90" cy="90" r="85" fill="#111111" stroke="#2A2A2A" stroke-width="4"/>
+  
+  <!-- Stylized dumbbell icon - larger for mobile -->
+  <g transform="translate(35, 70)">
+    <!-- Left weight -->
+    <rect x="0" y="10" width="15" height="30" rx="5" fill="#9BFF00"/>
+    <!-- Right weight -->
+    <rect x="95" y="10" width="15" height="30" rx="5" fill="#0066FF"/>
+    <!-- Connection bar -->
+    <rect x="15" y="22" width="80" height="6" fill="#9BFF00"/>
+    <!-- Center grip -->
+    <rect x="45" y="17" width="20" height="16" rx="3" fill="white"/>
+  </g>
+  
+  <!-- Letter "Z" for Zankov - larger for mobile -->
+  <text x="90" y="145" font-family="Manrope, Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#9BFF00">Z</text>
+</svg>

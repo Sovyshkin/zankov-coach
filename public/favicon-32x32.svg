@@ -1,0 +1,20 @@
+<!-- 32x32 version with site colors -->
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="#111111" stroke="#2A2A2A" stroke-width="1"/>
+  
+  <!-- Stylized dumbbell icon -->
+  <g transform="translate(6, 12)">
+    <!-- Left weight -->
+    <rect x="0" y="2" width="3" height="6" rx="1" fill="#9BFF00"/>
+    <!-- Right weight -->
+    <rect x="17" y="2" width="3" height="6" rx="1" fill="#0066FF"/>
+    <!-- Connection bar -->
+    <rect x="3" y="4.5" width="14" height="1" fill="#9BFF00"/>
+    <!-- Center grip -->
+    <rect x="8" y="3.5" width="4" height="3" rx="0.5" fill="white"/>
+  </g>
+  
+  <!-- Letter "Z" for Zankov -->
+  <text x="16" y="26" font-family="Manrope, Arial, sans-serif" font-size="8" font-weight="bold" text-anchor="middle" fill="#9BFF00">Z</text>
+</svg>
