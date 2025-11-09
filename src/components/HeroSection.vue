@@ -34,17 +34,67 @@
                   <span class="text-accent">произведение искусства</span>
                 </h2>
                 <p class="description-text">
-                  Более 7 лет опыта в фитнес-индустрии. Помог более чем 200 клиентам 
-                  достичь желаемых результатов. Специализируюсь на трансформации тела, 
-                  силовых тренировках и функциональном фитнесе.
+                  Более 5 лет опыта работы в фитнес индустрии. Помог более чем 100 клиентам достричь желаемых результатов.
                 </p>
+                
+                <div class="expertise-list">
+                  <div class="expertise-item">
+                    <div class="expertise-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="expertise-text">Работаю над улучшением качества тела и жизни</span>
+                  </div>
+                  
+                  <div class="expertise-item">
+                    <div class="expertise-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="expertise-text">Набор мышечной массы</span>
+                  </div>
+                  
+                  <div class="expertise-item">
+                    <div class="expertise-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="expertise-text">Повышение силовых показателей</span>
+                  </div>
+                  
+                  <div class="expertise-item">
+                    <div class="expertise-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="expertise-text">Снижение веса за счет жирового компонента</span>
+                  </div>
+                  
+                  <div class="expertise-item">
+                    <div class="expertise-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <span class="expertise-text">Помогаю убрать боль в пояснице и суставах</span>
+                  </div>
+                </div>
                 
               </div>
             </div>
             
             <div class="hero-cta slide-left" :class="{ visible: isVisible }">
               <button class="btn btn-primary" @click="$emit('openContactForm')">
-                Записаться на пробную тренировку
+                Записаться на консультацию
               </button>
               <p class="cta-note">Первая консультация бесплатно</p>
             </div>
@@ -220,7 +270,77 @@ const handleImageError = (event: Event) => {
   font-size: 1.1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-lg);
+}
+
+.expertise-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
   margin-bottom: var(--space-xl);
+}
+
+.expertise-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInExpertise 0.6s ease-out forwards;
+}
+
+.expertise-item:nth-child(1) { animation-delay: 0.1s; }
+.expertise-item:nth-child(2) { animation-delay: 0.2s; }
+.expertise-item:nth-child(3) { animation-delay: 0.3s; }
+.expertise-item:nth-child(4) { animation-delay: 0.4s; }
+.expertise-item:nth-child(5) { animation-delay: 0.5s; }
+
+.expertise-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.expertise-icon svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-black);
+  transition: all var(--transition-fast);
+}
+
+.expertise-item:hover .expertise-icon {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(155, 255, 0, 0.3);
+}
+
+.expertise-text {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.expertise-item:hover .expertise-text {
+  color: var(--color-white);
+}
+
+@keyframes slideInExpertise {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .achievements {
@@ -271,6 +391,33 @@ const handleImageError = (event: Event) => {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   font-style: italic;
+}
+
+/* Большие экраны - еще более компактный вид */
+@media (min-width: 1400px) {
+  .expertise-list {
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .expertise-item {
+    padding: 2px 0;
+  }
+  
+  .expertise-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .expertise-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .expertise-text {
+    font-size: 0.85rem;
+    line-height: 1.2;
+  }
 }
 
 /* Адаптивность */
@@ -361,7 +508,32 @@ const handleImageError = (event: Event) => {
   .description-text {
     font-size: 1rem;
     line-height: 1.6;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .expertise-list {
+    gap: var(--space-sm);
     margin-bottom: var(--space-xl);
+  }
+  
+  .expertise-item {
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+  }
+  
+  .expertise-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .expertise-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .expertise-text {
+    font-size: 0.95rem;
+    line-height: 1.3;
   }
   
   .btn-primary {
@@ -419,6 +591,31 @@ const handleImageError = (event: Event) => {
   .description-text {
     font-size: 0.95rem;
     line-height: 1.5;
+    margin-bottom: var(--space-md);
+  }
+  
+  .expertise-list {
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .expertise-item {
+    gap: var(--space-xs);
+  }
+  
+  .expertise-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .expertise-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .expertise-text {
+    font-size: 0.9rem;
+    line-height: 1.2;
   }
   
   .btn-primary {

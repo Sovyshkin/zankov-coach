@@ -45,9 +45,6 @@
           <button class="btn btn-primary" @click="openTelegramChat">
             Задать вопрос
           </button>
-          <a href="tel:+79991234567" class="btn btn-secondary">
-            Позвонить сейчас
-          </a>
         </div>
       </div>
     </div>

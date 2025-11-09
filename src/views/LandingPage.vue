@@ -7,7 +7,7 @@
           <div class="nav-brand">
             <a href="#hero" @click="scrollTo('hero')" class="brand-link">
               <span class="brand-text">Владислав</span>
-              <span class="brand-subtitle">Premium Coach</span>
+              <span class="brand-subtitle">FITNESS COACH</span>
             </a>
           </div>
           <div class="nav-links" :class="{ 'nav-open': isMobileMenuOpen }">
@@ -35,7 +35,7 @@
         <div class="mobile-menu-header">
           <div class="mobile-brand">
             <span class="mobile-brand-text">Владислав</span>
-            <span class="mobile-brand-subtitle">Premium Coach</span>
+            <span class="mobile-brand-subtitle">FITNESS COACH</span>
           </div>
           <button class="mobile-menu-close" @click="isMobileMenuOpen = false">
             <span class="close-line"></span>
@@ -70,16 +70,12 @@
           <div class="mobile-menu-footer">
             <div class="mobile-contact">
               <div class="contact-item">
-                <span class="contact-label">Email</span>
-                <a href="mailto:info@zankovcoach.ru">info@zankovcoach.ru</a>
-              </div>
-              <div class="contact-item">
                 <span class="contact-label">Телефон</span>
                 <a href="tel:+79022361129">+7 (902) 236-11-29</a>
               </div>
               <div class="contact-item">
                 <span class="contact-label">Адрес</span>
-                <span>Московское ш., 17, Самара<br>БЦ Вертикаль, этаж 3</span>
+                <span style="color: white; text-align: center;">Московское ш., 17, Самара<br>БЦ Вертикаль, этаж 3</span>
               </div>
             </div>
             <div class="mobile-social">
@@ -91,11 +87,11 @@
               </svg>
               <span>@zankov_coach</span>
             </a>
-            <a href="https://t.me/Vladislav_Zankov" target="_blank" rel="noopener noreferrer" class="mobile-social-link">
+            <a href="https://t.me/zankov_coach" target="_blank" rel="noopener noreferrer" class="mobile-social-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M21 5L2 12.5l7 1M21 5l-2.5 15L9.5 13.5M21 5L9.5 13.5m0 0V19l3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span>@Vladislav_Zankov</span>
+              <span>@zankov_coach</span>
             </a>
           </div>
           </div> <!-- Закрываем mobile-menu-body -->
@@ -162,8 +158,7 @@
               основываясь на ваших целях, возможностях и ограничениях.
             </p>
             <p>
-              За 7 лет работы я помог более чем 200 клиентам достичь своих целей.
-              Если вы ищете легких путей — вам не ко мне. Если готовы работать — добро пожаловать.
+              За 5 лет работы я помог более чем 200 клиентам. Если вы готовы прикладывать максимум усилий для достижения своей цели - добро пожаловать ко мне.
             </p>
             <div class="philosophy-principles">
               <div class="principle">
@@ -259,10 +254,10 @@
           <div class="footer-brand">
             <div class="brand-logo">
               <h3>Владислав Заньков</h3>
-              <span class="brand-tagline">Elite Personal Training</span>
+              <span class="brand-tagline">FITNESS COACH</span>
             </div>
             <p class="brand-description">
-              Трансформируя тела и жизни с 2016 года. 
+              Трансформирую тела и жизни с 2020 года. 
               Более 500 успешных клиентов доверили мне свои цели.
             </p>
             <div class="certifications">
@@ -287,9 +282,6 @@
             <h4>Контакты</h4>
             <div class="contact-info">
               <div class="contact-item">
-                <a href="mailto:info@zankovcoach.ru">info@zankovcoach.ru</a>
-              </div>
-              <div class="contact-item">
                 <a href="tel:+79022361129">+7 (902) 236-11-29</a>
               </div>
               <div class="contact-item">
@@ -311,13 +303,13 @@
                 </span>
                 <span class="social-text">@zankov_coach</span>
               </a>
-              <a href="https://t.me/Vladislav_Zankov" target="_blank" rel="noopener noreferrer" class="social-link telegram">
+              <a href="https://t.me/zankov_coach" target="_blank" rel="noopener noreferrer" class="social-link telegram">
                 <span class="social-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M21 5L2 12.5l7 1M21 5l-2.5 15L9.5 13.5M21 5L9.5 13.5m0 0V19l3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </span>
-                <span class="social-text">@Vladislav_Zankov</span>
+                <span class="social-text">@zankov_coach</span>
               </a>
             </div>
             <div class="footer-cta">
@@ -336,7 +328,7 @@
             <p>&copy; 2025 Владислав Заньков. Все права защищены.</p>
           </div>
           <div class="footer-badge">
-            <span class="premium-badge">Premium Coaching Since 2016</span>
+            <span class="premium-badge">FITNESS COACH Since 2020</span>
           </div>
         </div>
       </div>

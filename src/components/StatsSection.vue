@@ -30,10 +30,10 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { number: 8, suffix: '+', label: 'лет опыта' },
-  { number: 250, suffix: '+', label: 'довольных клиентов' },
-  { number: 95, suffix: '%', label: 'клиентов достигают цели' },
-  { number: 15, suffix: '+', label: 'кг средняя потеря веса' }
+  { number: 8, suffix: '', label: 'лет тренировок' },
+  { number: 5, suffix: '', label: 'лет опыта работы' },
+  { number: 200, suffix: '+', label: 'довольных клиентов' },
+  { number: 10, suffix: '+', label: 'кг средняя потеря веса' }
 ];
 
 const visibleStats = ref(Array(stats.length).fill(false));
