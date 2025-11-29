@@ -36,11 +36,6 @@
       <div class="container">
         <div class="methodology-content">
           <div class="methodology-header">
-            <div class="icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
             <h3>Методология работы</h3>
           </div>
           <p>
@@ -119,7 +114,7 @@ const advantages: Advantage[] = [
              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
            </svg>`,
     title: 'Работа на результат',
-    description: 'Я не буду вас жалеть. Работаем до достижения цели, используя проверенные методики.',
+    description: 'Работаем до достижения цели, используя проверенные методики.',
     features: [
       'Составление программ с учетом биомеханических углов и эффективных упражнений',
       'Использование периодизации нагрузки в циклах',
@@ -302,7 +297,7 @@ onMounted(() => {
   padding: var(--space-xs) 0;
   color: rgba(255, 255, 255, 0.8);
   position: relative;
-  padding-left: var(--space-lg);
+  padding-left: var(--space-xl);
   transition: color var(--transition-fast);
   display: flex;
   align-items: flex-start;
@@ -311,16 +306,23 @@ onMounted(() => {
 }
 
 .advantage-features li::before {
-  content: '✓';
+  content: '';
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-accent);
-  font-weight: bold;
-  font-size: 1.1rem;
-  line-height: 1;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
+  border-radius: 50%;
   flex-shrink: 0;
+  mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 .advantage-card:hover .advantage-features li {
@@ -667,7 +669,7 @@ onMounted(() => {
   .advantage-features li {
     font-size: 0.85rem;
     padding: var(--space-xs) 0;
-    padding-left: var(--space-sm);
+    padding-left: var(--space-xl);
     position: relative;
     word-wrap: break-word;
     line-height: 1.4;
@@ -676,10 +678,9 @@ onMounted(() => {
   .advantage-features li::before {
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.9rem;
-    line-height: 1;
+    top: 2px;
+    width: 18px;
+    height: 18px;
   }
   
   .methodology-section {

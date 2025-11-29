@@ -15,18 +15,53 @@
           :style="{ transitionDelay: `${index * 0.2}s` }"
         >
           <div class="transformation-images">
-            <div class="image-container">
-              <img :src="transformation.beforeImage" :alt="`${transformation.name} до`" class="before-image" />
-              <div class="image-label">ДО</div>
+            <div class="image-carousel" v-if="transformation.images.length > 1">
+              <div class="carousel-container">
+                <div 
+                  class="images-track"
+                  :style="{ transform: `translateX(-${getCarouselSlide(index) * 100}%)` }"
+                >
+                  <div 
+                    v-for="(image, imageIndex) in transformation.images" 
+                    :key="imageIndex"
+                    class="carousel-slide"
+                  >
+                    <img :src="image" :alt="`${transformation.name} - фото ${imageIndex + 1}`" class="client-image" />
+                  </div>
+                </div>
+                
+                <!-- Navigation buttons -->
+                <button 
+                  v-if="transformation.images.length > 1"
+                  class="carousel-nav prev" 
+                  @click="prevImage(index)"
+                >
+                  ‹
+                </button>
+                <button 
+                  v-if="transformation.images.length > 1"
+                  class="carousel-nav next" 
+                  @click="nextImage(index)"
+                >
+                  ›
+                </button>
+                
+                <!-- Dots indicator -->
+                <div class="carousel-dots" v-if="transformation.images.length > 1">
+                  <span
+                    v-for="(_, imageIndex) in transformation.images"
+                    :key="imageIndex"
+                    class="dot"
+                    :class="{ active: getCarouselSlide(index) === imageIndex }"
+                    @click="goToImage(index, imageIndex)"
+                  ></span>
+                </div>
+              </div>
             </div>
-            <div class="transformation-arrow">
-              <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
-                <path d="M30 10L35 5M35 5L30 0M35 5H0" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </div>
-            <div class="image-container">
-              <img :src="transformation.afterImage" :alt="`${transformation.name} после`" class="after-image" />
-              <div class="image-label after">ПОСЛЕ</div>
+            
+            <!-- Single image -->
+            <div class="single-image" v-else>
+              <img :src="transformation.images[0]" :alt="transformation.name" class="client-image" />
             </div>
           </div>
           
@@ -47,6 +82,12 @@
         </div>
       </div>
       
+      <div class="view-all-section fade-in" :class="{ visible: isVisible }">
+        <button class="btn btn-secondary" @click="goToAllTransformations">
+          Смотреть все результаты
+        </button>
+      </div>
+      
       <div class="transformation-cta fade-in" :class="{ visible: isVisible }">
         <p>Готов стать следующим в этом списке?</p>
         <button class="btn btn-primary" @click="openTelegramChat">
@@ -58,20 +99,22 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isVisible = ref(false);
+const carouselSlides = reactive<Record<number, number>>({});
 
 // Вычисляемое свойство для показа карточек
 const visibleTransformations = computed(() => {
-  // Показываем все карточки
-  return transformations;
+  // Показываем только первые 4 карточки на главной странице
+  return transformations.slice(0, 4);
 });
 
 interface Transformation {
   name: string;
-  beforeImage: string;
-  afterImage: string;
+  images: string[];
   weightLoss: string;
   duration: string;
   description: string;
@@ -79,41 +122,97 @@ interface Transformation {
 
 const transformations: Transformation[] = [
   {
-    name: 'Анна К.',
-    beforeImage: 'https://cdn.mos.cms.futurecdn.net/mgFgzRkXDvXhFMTe3JDULC-1280-80.png',
-    afterImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-    weightLoss: '-12 кг',
-    duration: '4 месяца',
-    description: 'Полностью изменила подход к питанию и тренировкам. Теперь чувствует себя увереннее.'
+    name: 'Юлия',
+    images: ['/src/assets/client-1.png'],
+    weightLoss: '+2 кг',
+    duration: '2 месяца',
+    description: ''
   },
   {
-    name: 'Михаил Р.',
-    beforeImage: 'https://cdn.mos.cms.futurecdn.net/mgFgzRkXDvXhFMTe3JDULC-1280-80.png',
-    afterImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-    weightLoss: '-18 кг',
-    duration: '6 месяцев',
-    description: 'Набрал мышечную массу и избавился от лишнего жира. Кардинально поменял образ жизни.'
-  },
-  {
-    name: 'Елена С.',
-    beforeImage: 'https://cdn.mos.cms.futurecdn.net/mgFgzRkXDvXhFMTe3JDULC-1280-80.png',
-    afterImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-    weightLoss: '-8 кг',
+    name: 'Римма',
+    images: ['/src/assets/client-2.png'],
+    weightLoss: '+4 кг',
     duration: '3 месяца',
-    description: 'Подготовилась к свадьбе и обрела фигуру мечты. Результат превзошел все ожидания.'
+    description: ''
   },
   {
-    name: 'Дмитрий П.',
-    beforeImage: 'https://cdn.mos.cms.futurecdn.net/mgFgzRkXDvXhFMTe3JDULC-1280-80.png',
-    afterImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-    weightLoss: '-15 кг',
+    name: 'Олеся',
+    images: ['/src/assets/client-3.jpg'],
+    weightLoss: '+4 кг',
+    duration: '6 месяцев',
+    description: ''
+  },
+  {
+    name: 'Кристина',
+    images: ['/src/assets/client-4.jpg'],
+    weightLoss: '-4 кг',
+    duration: '1 месяц',
+    description: ''
+  },
+  {
+    name: 'Ольга',
+    images: ['/src/assets/client-5-1.jpeg', '/src/assets/client-5-2.jpeg'],
+    weightLoss: '+1,5 кг',
+    duration: '3 месяца',
+    description: ''
+  },
+  {
+    name: 'Анастасия',
+    images: ['/src/assets/client-6.png'],
+    weightLoss: '-4 кг',
+    duration: '4 месяца',
+    description: ''
+  },
+  {
+    name: 'Самир',
+    images: ['/src/assets/client-7.jpg'],
+    weightLoss: '+3 кг',
+    duration: '1 год',
+    description: ''
+  },
+  {
+    name: 'Рустам',
+    images: ['/src/assets/client-8-1.jpg', '/src/assets/client-8-2.jpg'],
+    weightLoss: '-5 кг жира',
+    duration: '3 месяца',
+    description: ''
+  },
+  {
+    name: 'Ярослав',
+    images: ['/src/assets/client-10.jpg'],
+    weightLoss: '+2 кг',
     duration: '5 месяцев',
-    description: 'Вернул форму после травмы и стал сильнее, чем когда-либо. Превзошел собственные ожидания.'
+    description: ''
   }
 ];
 
+// Carousel functions
+const getCarouselSlide = (cardIndex: number) => {
+  return carouselSlides[cardIndex] || 0;
+};
+
+const nextImage = (cardIndex: number) => {
+  const transformation = transformations[cardIndex];
+  const currentSlide = carouselSlides[cardIndex] || 0;
+  carouselSlides[cardIndex] = currentSlide === transformation.images.length - 1 ? 0 : currentSlide + 1;
+};
+
+const prevImage = (cardIndex: number) => {
+  const transformation = transformations[cardIndex];
+  const currentSlide = carouselSlides[cardIndex] || 0;
+  carouselSlides[cardIndex] = currentSlide === 0 ? transformation.images.length - 1 : currentSlide - 1;
+};
+
+const goToImage = (cardIndex: number, imageIndex: number) => {
+  carouselSlides[cardIndex] = imageIndex;
+};
+
 const openTelegramChat = () => {
   window.open('https://t.me/Vladislav_Zankov', '_blank', 'noopener,noreferrer');
+};
+
+const goToAllTransformations = () => {
+  router.push('/transformations');
 };
 
 const observeSection = () => {
@@ -200,52 +299,115 @@ onMounted(() => {
 }
 
 .transformation-images {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: var(--space-xl);
-  gap: var(--space-md);
 }
 
-.image-container {
+/* Image carousel styles */
+.image-carousel {
   position: relative;
-  flex: 1;
-  max-width: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.1);
 }
 
-.image-container img {
+.carousel-container {
+  position: relative;
   width: 100%;
-  height: 120px;
+  height: 300px;
+}
+
+.images-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+.client-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 16px;
+}
+
+.single-image {
+  border-radius: 16px;
+  overflow: hidden;
+  height: 300px;
+}
+
+.single-image .client-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Navigation buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  opacity: 0;
+  z-index: 2;
+}
+
+.image-carousel:hover .carousel-nav {
+  opacity: 1;
+}
+
+.carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav.prev {
+  left: 10px;
+}
+
+.carousel-nav.next {
+  right: 10px;
+}
+
+/* Dots indicator */
+.carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
   transition: all var(--transition-smooth);
 }
 
-.image-label {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-graphite);
-  color: var(--color-white);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.1em;
-}
-
-.image-label.after {
+.dot.active {
   background: var(--color-accent);
-  color: var(--color-graphite);
+  transform: scale(1.2);
 }
 
-.transformation-arrow {
-  color: var(--color-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 var(--space-sm);
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .transformation-info h3 {
@@ -291,6 +453,40 @@ onMounted(() => {
   margin: 0;
 }
 
+.view-all-section {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.view-all-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  padding: var(--space-md) var(--space-2xl);
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  border-radius: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  background: var(--color-accent);
+  color: var(--color-graphite);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(155, 255, 0, 0.3);
+}
+
 .transformation-cta {
   text-align: center;
   padding: var(--space-2xl);
@@ -307,14 +503,8 @@ onMounted(() => {
 }
 
 /* Hover effects for images */
-.transformation-card:hover .before-image {
-  transform: scale(1.05);
-  filter: grayscale(0.5);
-}
-
-.transformation-card:hover .after-image {
-  transform: scale(1.05);
-  filter: brightness(1.1);
+.transformation-card:hover .client-image {
+  transform: scale(1.02);
 }
 
 /* Large screens */
@@ -380,26 +570,27 @@ onMounted(() => {
     border-radius: 16px;
   }
   
-  .transformation-images {
-    flex-direction: column;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
+  .carousel-container {
+    height: 250px;
   }
   
-  .transformation-arrow {
-    transform: rotate(90deg);
-    margin: var(--space-sm) 0;
-    width: 30px;
-    height: 30px;
+  .single-image {
+    height: 250px;
   }
   
-  .image-container {
-    max-width: 180px;
-    margin: 0 auto;
+  .carousel-nav {
+    opacity: 1; /* Always visible on mobile */
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
   }
   
-  .client-image {
-    border-radius: 12px;
+  .carousel-nav.prev {
+    left: 8px;
+  }
+  
+  .carousel-nav.next {
+    right: 8px;
   }
   
   .transformation-info h3 {
@@ -431,6 +622,15 @@ onMounted(() => {
   .stat-label {
     font-size: 0.9rem;
   }
+  
+  .view-all-section {
+    margin-bottom: var(--space-xl);
+  }
+  
+  .btn-secondary {
+    font-size: 0.95rem;
+    padding: var(--space-sm) var(--space-xl);
+  }
 }
 
 @media (max-width: 480px) {
@@ -458,12 +658,31 @@ onMounted(() => {
     margin-bottom: var(--space-lg);
   }
   
-  .transformation-images {
-    gap: var(--space-sm);
+  .carousel-container {
+    height: 220px;
   }
   
-  .image-container {
-    max-width: 140px; /* Уменьшаем размер изображений */
+  .single-image {
+    height: 220px;
+  }
+  
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  .carousel-nav.prev {
+    left: 6px;
+  }
+  
+  .carousel-nav.next {
+    right: 6px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
   }
   
   .transformation-info h3 {
@@ -518,6 +737,17 @@ onMounted(() => {
     padding: var(--space-sm) var(--space-md);
     max-width: 240px;
     width: 100%;
+  }
+  
+  .view-all-section {
+    margin-bottom: var(--space-lg);
+  }
+  
+  .btn-secondary {
+    font-size: 0.9rem;
+    padding: var(--space-sm) var(--space-lg);
+    width: calc(100% - var(--space-xl));
+    max-width: 280px;
   }
 }
 </style>

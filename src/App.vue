@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import LandingPage from '@/views/LandingPage.vue';
+// Router view будет автоматически подключать нужные компоненты
 </script>
 
 <template>
   <div id="app">
-    <LandingPage />
+    <router-view />
   </div>
 </template>
 

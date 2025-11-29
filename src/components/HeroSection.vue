@@ -7,16 +7,52 @@
     <div class="hero-content">
       <div class="container">
         <div class="hero-layout">
-          <!-- Левая колонка - Портрет тренера -->
+          <!-- Левая колонка - Простая карусель фотографий -->
           <div class="hero-portrait slide-right" :class="{ visible: isVisible }">
-            <div class="portrait-container">
-              <img 
-                src="../assets/zankov-coach.webp" 
-                alt="Владислав Заньков - персональный фитнес-тренер в Самаре, онлайн коучинг, трансформация тела"
-                class="trainer-photo"
-                @error="handleImageError"
-              />
-              <div class="portrait-frame"></div>
+            <div class="simple-carousel">
+              <div class="photo-container">
+                <!-- Фотографии с плавным переходом -->
+                <div 
+                  v-for="(photo, index) in trainerPhotos" 
+                  :key="index"
+                  class="photo-slide"
+                  :class="{ active: currentSlide === index }"
+                >
+                  <img 
+                    :src="photo.src" 
+                    :alt="photo.alt"
+                    class="trainer-photo"
+                    @error="handleImageError"
+                  />
+                </div>
+                
+                <!-- Навигация появляется при наведении -->
+                <button 
+                  class="nav-btn prev" 
+                  @click="prevSlide" 
+                  @mouseenter="stopAutoSlide"
+                  @mouseleave="startAutoSlide"
+                >‹</button>
+                <button 
+                  class="nav-btn next" 
+                  @click="nextSlide"
+                  @mouseenter="stopAutoSlide" 
+                  @mouseleave="startAutoSlide"
+                >›</button>
+              </div>
+              
+              <!-- Индикаторы -->
+              <div class="simple-indicators">
+                <span
+                  v-for="(_, index) in trainerPhotos"
+                  :key="index"
+                  class="dot"
+                  :class="{ active: currentSlide === index }"
+                  @click="goToSlide(index)"
+                  @mouseenter="stopAutoSlide"
+                  @mouseleave="startAutoSlide"
+                ></span>
+              </div>
             </div>
           </div>
           
@@ -106,7 +142,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted } from 'vue';
 
 // Define emits
 const emit = defineEmits<{
@@ -114,17 +150,94 @@ const emit = defineEmits<{
 }>();
 
 const isVisible = ref(false);
+const currentSlide = ref(0);
+let autoSlideInterval: number | null = null;
+
+// Данные для карусели с локальными фотографиями
+const trainerPhotos = [
+  {
+    src: '/src/assets/coach.webp',
+    alt: 'Владислав Заньков - персональный фитнес-тренер'
+  },
+  {
+    src: '/src/assets/coach-1.jpg',
+    alt: 'Владислав Заньков - персональный фитнес-тренер'
+  },
+  {
+    src: '/src/assets/coach-2.jpg',
+    alt: 'Владислав Заньков - тренировка'
+  },
+  {
+    src: '/src/assets/coach-3.jpg',
+    alt: 'Владислав Заньков - работа с клиентом'
+  },
+  {
+    src: '/src/assets/coach-4.jpg',
+    alt: 'Владислав Заньков - демонстрация упражнений'
+  },
+  {
+    src: '/src/assets/coach-5.jpg',
+    alt: 'Владислав Заньков - в спортзале'
+  },
+  {
+    src: '/src/assets/coach-6.jpg',
+    alt: 'Владислав Заньков - персональная тренировка'
+  },
+  {
+    src: '/src/assets/coach-7.jpg',
+    alt: 'Владислав Заньков - профессиональное фото'
+  }
+];
+
+// Функции навигации
+const nextSlide = () => {
+  currentSlide.value = currentSlide.value === trainerPhotos.length - 1 ? 0 : currentSlide.value + 1;
+};
+
+const prevSlide = () => {
+  currentSlide.value = currentSlide.value === 0 ? trainerPhotos.length - 1 : currentSlide.value - 1;
+};
+
+const goToSlide = (index: number) => {
+  currentSlide.value = index;
+  // Перезапускаем автопереключение после ручного выбора
+  restartAutoSlide();
+};
+
+// Автопереключение
+const startAutoSlide = () => {
+  autoSlideInterval = window.setInterval(nextSlide, 10000); // 15 секунд
+};
+
+const stopAutoSlide = () => {
+  if (autoSlideInterval) {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = null;
+  }
+};
+
+const restartAutoSlide = () => {
+  stopAutoSlide();
+  startAutoSlide();
+};
 
 onMounted(() => {
   setTimeout(() => {
     isVisible.value = true;
   }, 300);
+  
+  // Запускаем автопереключение через 3 секунды после загрузки
+  setTimeout(startAutoSlide, 3000);
+});
+
+onUnmounted(() => {
+  stopAutoSlide();
 });
 
 const handleImageError = (event: Event) => {
-  // Если изображение не загрузилось, показываем placeholder
+  // Если изображение не загрузилось, показываем fallback из локальных фото
   const img = event.target as HTMLImageElement;
-  img.src = 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80';
+  img.src = '/src/assets/coach.webp'; // Используем основное фото как fallback
 };
 </script>
 
@@ -195,35 +308,10 @@ const handleImageError = (event: Event) => {
   height: 100%;
   object-fit: cover;
   border-radius: 20px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 0 3px rgba(155, 255, 0, 0.3);
-  transition: all var(--transition-smooth);
-  filter: grayscale(0.1) contrast(1.1) brightness(1.05);
+  /* Старые стили убраны для производительности */
 }
 
-.trainer-photo:hover {
-  transform: scale(1.02);
-  box-shadow: 
-    0 25px 80px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(155, 255, 0, 0.5),
-    0 0 20px rgba(155, 255, 0, 0.2);
-}
-
-.portrait-frame {
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  right: -15px;
-  bottom: -15px;
-  border: 2px solid rgba(155, 255, 0, 0.2);
-  border-radius: 25px;
-  background: linear-gradient(45deg, 
-    rgba(155, 255, 0, 0.1) 0%, 
-    transparent 50%, 
-    rgba(155, 255, 0, 0.1) 100%);
-  pointer-events: none;
-}
+/* portrait-frame стили убраны - больше не используются */
 
 /* Информация о тренере */
 .hero-info {
@@ -305,19 +393,14 @@ const handleImageError = (event: Event) => {
   background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
   border-radius: 50%;
   flex-shrink: 0;
-  transition: all var(--transition-fast);
+  /* Убираем transitions для производительности */
 }
 
 .expertise-icon svg {
   width: 14px;
   height: 14px;
   color: var(--color-black);
-  transition: all var(--transition-fast);
-}
-
-.expertise-item:hover .expertise-icon {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(155, 255, 0, 0.3);
+  /* Убираем transitions для производительности */
 }
 
 .expertise-text {
@@ -325,11 +408,7 @@ const handleImageError = (event: Event) => {
   line-height: 1.3;
   color: rgba(255, 255, 255, 0.9);
   font-weight: var(--font-weight-medium);
-  transition: color var(--transition-fast);
-}
-
-.expertise-item:hover .expertise-text {
-  color: var(--color-white);
+  /* Убираем transitions для производительности */
 }
 
 @keyframes slideInExpertise {
@@ -343,43 +422,183 @@ const handleImageError = (event: Event) => {
   }
 }
 
-.achievements {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-  margin-bottom: var(--space-xl);
+/* Карусель с плавными переходами */
+.simple-carousel {
+  position: relative;
+  width: 500px;
+  height: 600px;
+  max-width: 100%;
 }
 
-.achievement-item {
-  text-align: center;
-  padding: var(--space-md);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  border: 1px solid rgba(155, 255, 0, 0.2);
-  transition: all var(--transition-fast);
+.photo-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), 
+              box-shadow 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.achievement-item:hover {
-  transform: translateY(-5px);
-  border-color: rgba(155, 255, 0, 0.4);
-  box-shadow: 0 10px 30px rgba(155, 255, 0, 0.2);
+.photo-container:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
-.achievement-number {
+.photo-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.photo-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  animation: photoBreathing 16s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+
+@keyframes photoBreathing {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+  }
+  50% { 
+    transform: scale(1.01);
+    filter: brightness(1.05) saturate(1.1);
+  }
+}
+
+.trainer-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  font-size: 2.5rem;
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-accent);
-  line-height: 1;
-  margin-bottom: var(--space-xs);
+  /* Добавляем очень плавный blur эффект */
+  filter: blur(0px) brightness(1) saturate(1);
+  transition: filter 1.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.achievement-label {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.photo-slide:not(.active) .trainer-photo {
+  filter: blur(4px) brightness(0.6) saturate(0.8);
+}
+
+/* Навигация появляется при наведении */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.7);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  backdrop-filter: blur(10px);
+}
+
+.photo-container:hover .nav-btn {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn.prev {
+  left: 10px;
+}
+
+.nav-btn.next {
+  right: 10px;
+}
+
+/* Индикаторы с плавными переходами */
+.simple-indicators {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.3);
+}
+
+.dot.active {
+  background: var(--color-accent);
+  transform: scale(1.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.dot.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: dotShimmer 4s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+
+@keyframes dotShimmer {
+  0% { 
+    left: -120%; 
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  25% { 
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  75% { 
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% { 
+    left: 120%; 
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-cta {
@@ -454,7 +673,7 @@ const handleImageError = (event: Event) => {
     padding-left: 0;
   }
   
-  .portrait-container {
+  .simple-carousel {
     width: 350px;
     height: 430px;
     margin: 0 auto;
@@ -548,15 +767,24 @@ const handleImageError = (event: Event) => {
     margin-top: var(--space-md);
   }
   
-  .achievements {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    margin-top: var(--space-xl);
+  /* Адаптивные стили */
+  .simple-carousel {
+    width: 450px;
+    height: 550px;
   }
   
-  .achievement {
-    padding: var(--space-lg);
-    text-align: center;
+  .nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+  
+  .nav-btn.prev {
+    left: 8px;
+  }
+  
+  .nav-btn.next {
+    right: 8px;
   }
 }
 
@@ -630,24 +858,69 @@ const handleImageError = (event: Event) => {
     font-size: 0.85rem;
   }
   
-  .achievement {
-    padding: var(--space-md);
-  }
-  
-  .achievement h3 {
-    font-size: 1.5rem;
-  }
-  
-  .achievement p {
-    font-size: 0.9rem;
-  }
-  
   .trainer-intro {
     margin-bottom: var(--space-lg);
   }
   
   .trainer-description {
     margin-bottom: var(--space-lg);
+  }
+  
+  /* Мобильные стили */
+  .simple-carousel {
+    width: 220px;
+    height: 270px;
+  }
+  
+  .nav-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+  
+  .nav-btn.prev {
+    left: 5px;
+  }
+  
+  .nav-btn.next {
+    right: 5px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .simple-indicators {
+    bottom: -35px;
+    gap: 6px;
+  }
+  
+  /* На мобильных стрелки всегда видны для удобства */
+  .nav-btn {
+    opacity: 0.7;
+  }
+  
+  .photo-container:hover .nav-btn {
+    opacity: 1;
+  }
+  
+  /* Отключаем тяжелые анимации на мобильных для производительности */
+  .photo-slide.active {
+    animation: none;
+  }
+  
+  .photo-container:hover {
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .trainer-photo {
+    filter: none;
+  }
+  
+  .photo-slide:not(.active) .trainer-photo {
+    filter: none;
   }
 }
 </style>

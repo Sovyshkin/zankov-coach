@@ -295,16 +295,31 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.8);
   padding: var(--space-xs) 0;
   position: relative;
-  padding-left: var(--space-lg);
+  padding-left: var(--space-xl);
   line-height: 1.6;
+  display: flex;
+  align-items: center;
 }
 
 .answer-points li::before {
-  content: '→';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--color-accent);
-  font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
+  border-radius: 50%;
+  flex-shrink: 0;
+  mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 .faq-cta {

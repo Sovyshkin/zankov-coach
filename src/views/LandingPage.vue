@@ -197,7 +197,7 @@
           <p>Выберите подходящий формат работы</p>
         </div>
         
-        <div class="services-grid grid grid-3">
+        <div class="services-grid">
           <div 
             v-for="(service, index) in services" 
             :key="index"
@@ -217,6 +217,9 @@
               <span class="price">{{ service.price }}</span>
               <span class="price-period">{{ service.period }}</span>
             </div>
+            <button class="btn btn-primary service-buy-btn" @click="openTelegramChat">
+              Купить
+            </button>
           </div>
         </div>
       </div>
@@ -237,8 +240,8 @@
             <button class="btn btn-primary" @click="openTelegramChat">
               Начать сейчас
             </button>
-            <button class="btn btn-secondary" @click="downloadProgram">
-              Скачать программу питания
+            <button class="btn btn-secondary" @click="openPdfGuide">
+              Скачать гайд по батончикам
             </button>
           </div>
         </div>
@@ -399,23 +402,31 @@ const services = [
     title: 'Персональные тренировки',
     description: 'Индивидуальные занятия в тренажерном зале с постоянным контролем техники выполнения упражнений',
     features: ['Персональная программа', 'Обучение технике', 'Постановка целей', 'Мотивация и поддержка'],
-    price: '5000₽',
+    price: '2300₽',
     period: 'за тренировку'
   },
   {
     icon: '💻',
-    title: 'Онлайн коучинг',
+    title: 'Онлайн введение',
     description: 'Дистанционное ведение с составлением программ тренировок и питания, регулярными проверками',
-    features: ['Индивидуальная программа', 'План питания', 'Еженедельные созвоны', 'Поддержка в чате'],
-    price: '15000₽',
+    features: ['Индивидуальная программа', 'План питания под вашу продуктовую корзину', 'Проверка видео техники упражнений', 'Еженедельная проверка фото отчетов', "Постоянная поддержка в чате"],
+    price: '12000₽',
     period: 'в месяц'
   },
   {
     icon: '🥗',
-    title: 'Программы питания',
+    title: 'План питания',
     description: 'Составление индивидуального плана питания с учетом ваших целей и пищевых предпочтений',
-    features: ['Расчет калорий и БЖУ', 'Список продуктов', 'Готовые рецепты', 'Корректировки плана'],
-    price: '8000₽',
+    features: ['Расчет КБЖУ под вашу цель и индивидуальные особенности организма.', 'Гайд по подсчету и взвешиванию еды.', 'Готовый рацион под вашу продуктовую корзину (порции в граммах)'],
+    price: '4000₽',
+    period: 'за программу'
+  },
+  {
+     icon: '💪',
+    title: 'Программа для самостоятельных тренировок',
+    description: 'Персональная тренировочная программа для достижения ваших фитнес-целей в домашних условиях или в зале',
+    features: ['Составление персонального тренировочного цикла.', 'Учитываю ваши ограничения и строение тела.', 'Получаете видео с разбором техники упражнений.'],
+    price: '5000₽',
     period: 'за программу'
   }
 ];
@@ -433,9 +444,14 @@ const openTelegramChat = () => {
   window.open('https://t.me/Vladislav_Zankov', '_blank', 'noopener,noreferrer');
 };
 
-const downloadProgram = () => {
-  // Здесь будет логика скачивания программы
-  alert('Скачивание программы питания будет реализовано позже');
+const openPdfGuide = () => {
+  // Скачиваем PDF гайд по батончикам
+  const link = document.createElement('a');
+  link.href = '/guide-batonciki.pdf';
+  link.download = 'guide-batonciki.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 // Video Modal Functions
@@ -1739,6 +1755,9 @@ img, video {
 }
 
 .services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
   margin-top: var(--space-2xl);
 }
 
@@ -1756,6 +1775,9 @@ img, video {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .service-card.visible {
@@ -1799,20 +1821,36 @@ img, video {
   color: rgba(255, 255, 255, 0.9);
   padding: var(--space-xs) 0;
   position: relative;
-  padding-left: var(--space-lg);
+  padding-left: var(--space-xl);
+  display: flex;
+  align-items: center;
 }
 
 .service-features li::before {
-  content: '✓';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--color-accent);
-  font-weight: bold;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
+  border-radius: 50%;
+  flex-shrink: 0;
+  mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12L11 14L15 10' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 .service-price {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: var(--space-lg);
+  margin-top: auto;
 }
 
 .price {
@@ -1826,6 +1864,12 @@ img, video {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   margin-top: var(--space-xs);
+}
+
+.service-buy-btn {
+  width: 100%;
+  margin-top: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
 }
 
 /* CTA Section */
@@ -2330,6 +2374,11 @@ img, video {
 
 /* Tablet Responsive */
 @media (max-width: 1024px) and (min-width: 769px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+  
   .footer-content {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-2xl);
@@ -2366,6 +2415,11 @@ img, video {
 }
 
 @media (max-width: 768px) and (min-width: 481px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+  
   .footer-content {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
