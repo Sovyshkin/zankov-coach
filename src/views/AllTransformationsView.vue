@@ -194,12 +194,14 @@ const getCarouselSlide = (cardIndex: number) => {
 
 const nextImage = (cardIndex: number) => {
   const transformation = transformations[cardIndex];
+  if (!transformation) return;
   const currentSlide = carouselSlides[cardIndex] || 0;
   carouselSlides[cardIndex] = currentSlide === transformation.images.length - 1 ? 0 : currentSlide + 1;
 };
 
 const prevImage = (cardIndex: number) => {
   const transformation = transformations[cardIndex];
+  if (!transformation) return;
   const currentSlide = carouselSlides[cardIndex] || 0;
   carouselSlides[cardIndex] = currentSlide === 0 ? transformation.images.length - 1 : currentSlide - 1;
 };

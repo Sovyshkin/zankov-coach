@@ -239,7 +239,7 @@
           <div class="cta-buttons">
             <button class="btn btn-primary" @click="openTelegramChat">
               Начать сейчас
-            </button>
+            </button> 
             <button class="btn btn-secondary" @click="openPdfGuide">
               Скачать гайд по батончикам
             </button>
