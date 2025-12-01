@@ -108,31 +108,31 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    screenshot: '/src/assets/feedback-1.PNG'
+    screenshot: '/feedback-1.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-2.PNG'
+    screenshot: '/feedback-2.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-3.PNG'
+    screenshot: '/feedback-3.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-4.PNG'
+    screenshot: '/feedback-4.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-5.PNG'
+    screenshot: '/feedback-5.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-6.PNG'
+    screenshot: '/feedback-6.PNG'
   },
   {
-    screenshot: '/src/assets/feedback-7.PNG'
+    screenshot: '/feedback-7.PNG'
   }
 ];
 
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement;
-  img.src = '/src/assets/feedback-1.PNG'; // Fallback image
+  img.src = '/feedback-1.PNG'; // Fallback image
 };
 
 const openFullscreen = (imageSrc: string) => {

@@ -229,7 +229,7 @@
     <div class="faq-wrapper fade-in" :class="{ visible: sectionsVisible.faq }">
       <FAQSection />
     </div>
-
+ы
     <!-- CTA Section -->
     <section id="contact" class="cta section section-dark">
       <div class="container">

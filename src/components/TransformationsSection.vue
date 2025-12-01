@@ -123,63 +123,63 @@ interface Transformation {
 const transformations: Transformation[] = [
   {
     name: 'Юлия',
-    images: ['/src/assets/client-1.png'],
+    images: ['/client-1.png'],
     weightLoss: '+2 кг',
     duration: '2 месяца',
     description: ''
   },
   {
     name: 'Римма',
-    images: ['/src/assets/client-2.png'],
+    images: ['/client-2.png'],
     weightLoss: '+4 кг',
     duration: '3 месяца',
     description: ''
   },
   {
     name: 'Олеся',
-    images: ['/src/assets/client-3.jpg'],
+    images: ['/client-3.jpg'],
     weightLoss: '+4 кг',
     duration: '6 месяцев',
     description: ''
   },
   {
     name: 'Кристина',
-    images: ['/src/assets/client-4.jpg'],
+    images: ['/client-4.jpg'],
     weightLoss: '-4 кг',
     duration: '1 месяц',
     description: ''
   },
   {
     name: 'Ольга',
-    images: ['/src/assets/client-5-1.jpeg', '/src/assets/client-5-2.jpeg'],
+    images: ['/client-5-1.jpeg', '/client-5-2.jpeg'],
     weightLoss: '+1,5 кг',
     duration: '3 месяца',
     description: ''
   },
   {
     name: 'Анастасия',
-    images: ['/src/assets/client-6.png'],
+    images: ['/client-6.png'],
     weightLoss: '-4 кг',
     duration: '4 месяца',
     description: ''
   },
   {
     name: 'Самир',
-    images: ['/src/assets/client-7.jpg'],
+    images: ['/client-7.jpg'],
     weightLoss: '+3 кг',
     duration: '1 год',
     description: ''
   },
   {
     name: 'Рустам',
-    images: ['/src/assets/client-8-1.jpg', '/src/assets/client-8-2.jpg'],
+    images: ['/client-8-1.jpg', '/client-8-2.jpg'],
     weightLoss: '-5 кг жира',
     duration: '3 месяца',
     description: ''
   },
   {
     name: 'Ярослав',
-    images: ['/src/assets/client-10.jpg'],
+    images: ['/client-10.jpg'],
     weightLoss: '+2 кг',
     duration: '5 месяцев',
     description: ''
