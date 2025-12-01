@@ -552,9 +552,9 @@ onUnmounted(() => {
   }
   
   .carousel-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.3rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
   }
   
   .carousel-dots {
@@ -633,9 +633,9 @@ onUnmounted(() => {
   }
   
   .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
   }
   
   .fullscreen-hint {

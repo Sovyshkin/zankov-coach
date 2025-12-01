@@ -156,35 +156,35 @@ let autoSlideInterval: number | null = null;
 // Данные для карусели с локальными фотографиями
 const trainerPhotos = [
   {
-    src: '/src/assets/coach.webp',
+    src: '/coach.webp',
     alt: 'Владислав Заньков - персональный фитнес-тренер'
   },
   {
-    src: '/src/assets/coach-1.jpg',
+    src: '/coach-1.jpg',
     alt: 'Владислав Заньков - персональный фитнес-тренер'
   },
   {
-    src: '/src/assets/coach-2.jpg',
+    src: '/coach-2.jpg',
     alt: 'Владислав Заньков - тренировка'
   },
   {
-    src: '/src/assets/coach-3.jpg',
+    src: '/coach-3.jpg',
     alt: 'Владислав Заньков - работа с клиентом'
   },
   {
-    src: '/src/assets/coach-4.jpg',
+    src: '/coach-4.jpg',
     alt: 'Владислав Заньков - демонстрация упражнений'
   },
   {
-    src: '/src/assets/coach-5.jpg',
+    src: '/coach-5.jpg',
     alt: 'Владислав Заньков - в спортзале'
   },
   {
-    src: '/src/assets/coach-6.jpg',
+    src: '/coach-6.jpg',
     alt: 'Владислав Заньков - персональная тренировка'
   },
   {
-    src: '/src/assets/coach-7.jpg',
+    src: '/coach-7.jpg',
     alt: 'Владислав Заньков - профессиональное фото'
   }
 ];
@@ -237,7 +237,7 @@ onUnmounted(() => {
 const handleImageError = (event: Event) => {
   // Если изображение не загрузилось, показываем fallback из локальных фото
   const img = event.target as HTMLImageElement;
-  img.src = '/src/assets/coach.webp'; // Используем основное фото как fallback
+  img.src = '/coach.webp'; // Используем основное фото как fallback
 };
 </script>
 
