@@ -689,7 +689,7 @@ const handleImageError = (event: Event) => {
   .hero-layout {
     flex-direction: column;
     gap: var(--space-2xl);
-    text-align: center;
+    text-align: left;
   }
   
   .hero-portrait {
@@ -700,6 +700,7 @@ const handleImageError = (event: Event) => {
   .hero-info {
     order: 2;
     max-width: 100%;
+    text-align: left;
   }
   
   .portrait-container {
@@ -765,6 +766,7 @@ const handleImageError = (event: Event) => {
   .cta-note {
     font-size: 0.9rem;
     margin-top: var(--space-md);
+    text-align: left;
   }
   
   /* Адаптивные стили */
@@ -796,6 +798,7 @@ const handleImageError = (event: Event) => {
   .hero-layout {
     gap: var(--space-xl);
     padding: 0 var(--space-md);
+    text-align: left;
   }
   
   .portrait-container {
@@ -856,14 +859,17 @@ const handleImageError = (event: Event) => {
   
   .cta-note {
     font-size: 0.85rem;
+    text-align: left;
   }
   
   .trainer-intro {
     margin-bottom: var(--space-lg);
+    text-align: left;
   }
   
   .trainer-description {
     margin-bottom: var(--space-lg);
+    text-align: left;
   }
   
   /* Мобильные стили */

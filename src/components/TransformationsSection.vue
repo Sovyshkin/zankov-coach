@@ -26,7 +26,12 @@
                     :key="imageIndex"
                     class="carousel-slide"
                   >
-                    <img :src="image" :alt="`${transformation.name} - фото ${imageIndex + 1}`" class="client-image" />
+                    <img 
+                      :src="image" 
+                      :alt="`${transformation.name} - фото ${imageIndex + 1}`" 
+                      class="client-image"
+                      @click="openFullscreen(image, transformation.name)"
+                    />
                   </div>
                 </div>
                 
@@ -61,7 +66,12 @@
             
             <!-- Single image -->
             <div class="single-image" v-else>
-              <img :src="transformation.images[0]" :alt="transformation.name" class="client-image" />
+              <img 
+                :src="transformation.images[0]" 
+                :alt="transformation.name" 
+                class="client-image"
+                @click="openFullscreen(transformation.images[0], transformation.name)"
+              />
             </div>
           </div>
           
@@ -70,7 +80,7 @@
             <div class="transformation-stats">
               <div class="stat">
                 <span class="stat-value">{{ transformation.weightLoss }}</span>
-                <span class="stat-label">потеря веса</span>
+                <span class="stat-label">изменение веса</span>
               </div>
               <div class="stat">
                 <span class="stat-value">{{ transformation.duration }}</span>
@@ -96,6 +106,27 @@
       </div>
     </div>
   </section>
+
+  <!-- Fullscreen Modal -->
+  <Teleport to="body">
+    <div 
+      v-if="isFullscreenOpen" 
+      class="fullscreen-modal"
+      @click="closeFullscreen"
+      @keydown.esc="closeFullscreen"
+    >
+      <div class="fullscreen-content" @click.stop>
+        <button class="close-btn" @click="closeFullscreen">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <img :src="fullscreenImage" :alt="fullscreenTitle" class="fullscreen-image" />
+        <div class="fullscreen-title">{{ fullscreenTitle }}</div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -105,6 +136,11 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const isVisible = ref(false);
 const carouselSlides = reactive<Record<number, number>>({});
+
+// Fullscreen modal state
+const isFullscreenOpen = ref(false);
+const fullscreenImage = ref('');
+const fullscreenTitle = ref('');
 
 // Вычисляемое свойство для показа карточек
 const visibleTransformations = computed(() => {
@@ -217,6 +253,20 @@ const goToAllTransformations = () => {
   router.push('/transformations');
 };
 
+const openFullscreen = (imageUrl: string, title: string) => {
+  fullscreenImage.value = imageUrl;
+  fullscreenTitle.value = title;
+  isFullscreenOpen.value = true;
+  document.body.style.overflow = 'hidden';
+};
+
+const closeFullscreen = () => {
+  isFullscreenOpen.value = false;
+  fullscreenImage.value = '';
+  fullscreenTitle.value = '';
+  document.body.style.overflow = 'auto';
+};
+
 const observeSection = () => {
   // Определяем настройки в зависимости от размера экрана
   const isMobile = window.innerWidth <= 768;
@@ -247,6 +297,15 @@ onMounted(() => {
       }, 500);
     }
   }, 100);
+
+  // Обработчик клавиши Escape для закрытия модального окна
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isFullscreenOpen.value) {
+      closeFullscreen();
+    }
+  };
+  
+  document.addEventListener('keydown', handleEscape);
 });
 </script>
 
@@ -751,5 +810,119 @@ onMounted(() => {
     width: calc(100% - var(--space-xl));
     max-width: 280px;
   }
+}
+
+/* Fullscreen Modal Styles */
+.fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.fullscreen-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.close-btn {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: calc(95vh - 80px);
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.fullscreen-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile fullscreen styles */
+@media (max-width: 768px) {
+  .close-btn {
+    top: -45px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .fullscreen-image {
+    max-height: calc(95vh - 60px);
+  }
+  
+  .fullscreen-title {
+    font-size: 1rem;
+    margin-top: var(--space-md);
+  }
+}
+
+/* Cursor pointer for clickable images */
+.client-image {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.client-image:hover {
+  transform: scale(1.02);
 }
 </style>

@@ -127,6 +127,7 @@
                 loop 
                 playsinline
                 class="philosophy-video-player"
+                @error="handleVideoError"
               >
                 <source src="https://royal-gym.ru/upload/iblock/524/6txno8robcynvp8n0ggfz4x4v2abf83w.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
@@ -213,12 +214,8 @@
             <ul class="service-features">
               <li v-for="feature in service.features" :key="feature">{{ feature }}</li>
             </ul>
-            <div class="service-price">
-              <span class="price">{{ service.price }}</span>
-              <span class="price-period">{{ service.period }}</span>
-            </div>
-            <button class="btn btn-primary service-buy-btn" @click="openTelegramChat">
-              Купить
+            <button class="btn btn-primary service-contact-btn" @click="openTelegramChat">
+              Связаться
             </button>
           </div>
         </div>
@@ -360,6 +357,7 @@
           autoplay
           class="modal-video-player"
           @loadedmetadata="onVideoLoaded"
+          @error="handleVideoError"
         >
           <source src="https://royal-gym.ru/upload/iblock/524/6txno8robcynvp8n0ggfz4x4v2abf83w.mp4" type="video/mp4">
           Ваш браузер не поддерживает видео.
@@ -401,33 +399,25 @@ const services = [
     icon: '💪',
     title: 'Персональные тренировки',
     description: 'Индивидуальные занятия в тренажерном зале с постоянным контролем техники выполнения упражнений',
-    features: ['Персональная программа', 'Обучение технике', 'Постановка целей', 'Мотивация и поддержка'],
-    price: '2300₽',
-    period: 'за тренировку'
+    features: ['Персональная программа', 'Обучение технике', 'Постановка целей', 'Мотивация и поддержка']
   },
   {
     icon: '💻',
     title: 'Онлайн введение',
     description: 'Дистанционное ведение с составлением программ тренировок и питания, регулярными проверками',
-    features: ['Индивидуальная программа', 'План питания под вашу продуктовую корзину', 'Проверка видео техники упражнений', 'Еженедельная проверка фото отчетов', "Постоянная поддержка в чате"],
-    price: '12000₽',
-    period: 'в месяц'
+    features: ['Индивидуальная программа', 'План питания под вашу продуктовую корзину', 'Проверка видео техники упражнений', 'Еженедельная проверка фото отчетов', "Постоянная поддержка в чате"]
   },
   {
     icon: '🥗',
     title: 'План питания',
     description: 'Составление индивидуального плана питания с учетом ваших целей и пищевых предпочтений',
-    features: ['Расчет КБЖУ под вашу цель и индивидуальные особенности организма.', 'Гайд по подсчету и взвешиванию еды.', 'Готовый рацион под вашу продуктовую корзину (порции в граммах)'],
-    price: '4000₽',
-    period: 'за программу'
+    features: ['Расчет КБЖУ под вашу цель и индивидуальные особенности организма.', 'Гайд по подсчету и взвешиванию еды.', 'Готовый рацион под вашу продуктовую корзину (порции в граммах)']
   },
   {
      icon: '💪',
     title: 'Программа для самостоятельных тренировок',
     description: 'Персональная тренировочная программа для достижения ваших фитнес-целей в домашних условиях или в зале',
-    features: ['Составление персонального тренировочного цикла.', 'Учитываю ваши ограничения и строение тела.', 'Получаете видео с разбором техники упражнений.'],
-    price: '5000₽',
-    period: 'за программу'
+    features: ['Составление персонального тренировочного цикла.', 'Учитываю ваши ограничения и строение тела.', 'Получаете видео с разбором техники упражнений.']
   }
 ];
 
@@ -484,6 +474,11 @@ const onVideoLoaded = () => {
   if (modalVideo.value) {
     modalVideo.value.volume = 0.7; // Set initial volume
   }
+};
+
+const handleVideoError = (event: Event) => {
+  console.log('Ошибка загрузки видео:', event);
+  // Можно добавить fallback изображение или скрыть секцию с видео
 };
 
 // Keyboard event handler
@@ -1847,28 +1842,9 @@ img, video {
   -webkit-mask-position: center;
 }
 
-.service-price {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  padding-top: var(--space-lg);
-  margin-top: auto;
-}
-
-.price {
-  font-size: 2rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
-}
-
-.price-period {
-  display: block;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-  margin-top: var(--space-xs);
-}
-
-.service-buy-btn {
+.service-contact-btn {
   width: 100%;
-  margin-top: var(--space-lg);
+  margin-top: auto;
   padding: var(--space-sm) var(--space-lg);
 }
 
@@ -2574,8 +2550,9 @@ img, video {
   .philosophy-video video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 16px;
+    background: var(--color-black);
   }
   
   .philosophy-text {
@@ -2633,13 +2610,15 @@ img, video {
   }
   
   .philosophy-video {
-    max-height: 300px;
+    max-height: 350px;
     border-radius: 12px;
     margin: 0;
   }
   
   .philosophy-video video {
     border-radius: 12px;
+    object-fit: contain;
+    background: var(--color-black);
   }
   
   .philosophy-text {
@@ -2709,6 +2688,15 @@ img, video {
   
   .services-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .service-features li {
+    text-align: left;
+    padding-left: var(--space-lg);
+  }
+  
+  .service-features li::before {
+    left: 0;
   }
   
   .cta-buttons {
@@ -3002,6 +2990,19 @@ img, video {
   
   .close-line {
     width: 16px;
+  }
+  
+  .service-features li {
+    font-size: 0.9rem;
+    text-align: left;
+    padding-left: var(--space-lg);
+    line-height: 1.4;
+  }
+  
+  .service-features li::before {
+    width: 16px;
+    height: 16px;
+    left: 0;
   }
 }
 

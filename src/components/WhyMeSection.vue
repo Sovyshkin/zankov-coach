@@ -15,7 +15,8 @@
           :style="{ transitionDelay: `${index * 0.1}s` }"
         >
           <div class="advantage-icon">
-            <div class="icon-container" v-html="advantage.icon">
+            <div class="icon-container">
+              <img :src="advantage.icon" :alt="advantage.title" class="advantage-svg-icon" />
             </div>
           </div>
           <h3>{{ advantage.title }}</h3>
@@ -85,9 +86,7 @@ interface Advantage {
 
 const advantages: Advantage[] = [
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-           </svg>`,
+    icon: '/icons/individual-icon.svg',
     title: 'Индивидуальность',
     description: 'Каждая программа создается персонально под ваши цели, физические возможности и ограничения.',
     features: [
@@ -96,23 +95,8 @@ const advantages: Advantage[] = [
       'Составление удобного рациона под вашу продуктовую корзину',
     ]
   },
-  // {
-  //   icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  //            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  //          </svg>`,
-  //   title: 'Поддержка 24/7',
-  //   description: 'Я всегда на связи, чтобы ответить на вопросы, мотивировать и корректировать программу.',
-  //   features: [
-  //     'Личный чат в мессенджере',
-  //     'Ответ в течение 2 часов',
-  //     'Видео-разборы техники',
-  //     'Еженедельные созвоны'
-  //   ]
-  // },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-           </svg>`,
+    icon: '/icons/results-icon.svg',
     title: 'Работа на результат',
     description: 'Работаем до достижения цели, используя проверенные методики.',
     features: [
@@ -227,19 +211,27 @@ onMounted(() => {
 }
 
 .icon-container {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   margin: 0 auto;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-accent), rgba(155, 255, 0, 0.8));
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  color: rgba(255, 255, 255, 0.9);
   transition: all var(--transition-smooth);
   position: relative;
+  transform: rotate(-5deg);
+  box-shadow: 0 8px 20px rgba(155, 255, 0, 0.2);
+}
+
+.advantage-svg-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--color-black);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all var(--transition-smooth);
 }
 
 .icon-container::after {
@@ -258,11 +250,15 @@ onMounted(() => {
 }
 
 .advantage-card:hover .icon-container {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-  border-color: rgba(255, 255, 255, 0.4);
-  color: rgba(255, 255, 255, 1);
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(155, 255, 0, 0.9), var(--color-accent));
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 15px 35px rgba(155, 255, 0, 0.4);
+}
+
+.advantage-card:hover .advantage-svg-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .advantage-card h3 {
@@ -300,7 +296,7 @@ onMounted(() => {
   padding-left: var(--space-xl);
   transition: color var(--transition-fast);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   word-wrap: break-word;
   line-height: 1.5;
 }
@@ -309,7 +305,8 @@ onMounted(() => {
   content: '';
   position: absolute;
   left: 0;
-  top: 4px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 20px;
   height: 20px;
   background: linear-gradient(135deg, var(--color-accent) 0%, rgba(155, 255, 0, 0.8) 100%);
@@ -495,11 +492,16 @@ onMounted(() => {
   
   .advantage-features li {
     font-size: 0.95rem;
-    padding-left: var(--space-md);
+    padding-left: var(--space-lg);
+    display: flex;
+    align-items: center;
   }
   
   .advantage-features li::before {
-    font-size: 1rem;
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
@@ -558,10 +560,10 @@ onMounted(() => {
   .advantage-features li {
     font-size: 0.9rem;
     padding: var(--space-xs) 0;
-    padding-left: var(--space-md);
+    padding-left: var(--space-lg);
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
   }
   
   .advantage-features li::before {
@@ -569,8 +571,8 @@ onMounted(() => {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1rem;
-    line-height: 1;
+    width: 18px;
+    height: 18px;
   }
   
   .guarantee-section {
@@ -673,14 +675,17 @@ onMounted(() => {
     position: relative;
     word-wrap: break-word;
     line-height: 1.4;
+    display: flex;
+    align-items: center;
   }
   
   .advantage-features li::before {
     position: absolute;
     left: 0;
-    top: 2px;
-    width: 18px;
-    height: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
   }
   
   .methodology-section {
@@ -706,9 +711,13 @@ onMounted(() => {
   }
   
   .icon-container {
-    width: 50px;
-    height: 50px;
-    font-size: 1.8rem;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .advantage-svg-icon {
+    width: 30px;
+    height: 30px;
   }
   
   .step {
