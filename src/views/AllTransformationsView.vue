@@ -83,7 +83,7 @@
                 :src="transformation.images[0]" 
                 :alt="transformation.name" 
                 class="client-image"
-                @click="openFullscreen(transformation.images[0], transformation.name)"
+                @click="transformation.images[0] && openFullscreen(transformation.images[0], transformation.name)"
               />
               </div>
             </div>
