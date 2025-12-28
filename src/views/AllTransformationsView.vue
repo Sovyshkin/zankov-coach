@@ -391,7 +391,8 @@ onMounted(() => {
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: auto;
+  min-height: 300px;
 }
 
 .images-track {
@@ -407,21 +408,25 @@ onMounted(() => {
 
 .client-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
   border-radius: 16px;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .single-image {
   border-radius: 16px;
   overflow: hidden;
-  height: 300px;
+  height: auto;
+  min-height: 300px;
 }
 
 .single-image .client-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
 }
 
 /* Navigation buttons */
@@ -609,11 +614,13 @@ onMounted(() => {
   }
 
   .carousel-container {
-    height: 250px;
+    height: auto;
+    min-height: 250px;
   }
 
   .single-image {
-    height: 250px;
+    height: auto;
+    min-height: 250px;
   }
 
   .carousel-nav {
@@ -654,11 +661,13 @@ onMounted(() => {
   }
 
   .carousel-container {
-    height: 200px;
+    height: auto;
+    min-height: 200px;
   }
 
   .single-image {
-    height: 200px;
+    height: auto;
+    min-height: 200px;
   }
 
   .carousel-nav {
