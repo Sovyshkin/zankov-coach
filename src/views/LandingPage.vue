@@ -129,7 +129,7 @@
                 class="philosophy-video-player"
                 @error="handleVideoError"
               >
-                <source src="https://royal-gym.ru/upload/iblock/524/6txno8robcynvp8n0ggfz4x4v2abf83w.mp4" type="video/mp4">
+                <source src="../assets/video.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
               </video>
               <div class="video-overlay">
@@ -359,7 +359,7 @@
           @loadedmetadata="onVideoLoaded"
           @error="handleVideoError"
         >
-          <source src="https://royal-gym.ru/upload/iblock/524/6txno8robcynvp8n0ggfz4x4v2abf83w.mp4" type="video/mp4">
+          <source src="../assets/video.mp4" type="video/mp4">
           Ваш браузер не поддерживает видео.
         </video>
       </div>
