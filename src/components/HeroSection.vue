@@ -63,16 +63,14 @@
                 <h1 class="trainer-name">Владислав Заньков</h1>
                 <p class="trainer-title">Персональный тренер</p>
               </div>
-              
               <div class="trainer-description">
                 <h2 class="description-title">
                   Преврати свое тело в 
                   <span class="text-accent">произведение искусства</span>
                 </h2>
                 <p class="description-text">
-                  Более 5 лет опыта работы в фитнес индустрии. Помог более чем 100 клиентам достричь желаемых результатов.
+                  Более 5 лет опыта работы в фитнес индустрии. Помог более чем 100 клиентам достичь желаемых результатов.
                 </p>
-                
                 <div class="expertise-list">
                   <div class="expertise-item">
                     <div class="expertise-icon">
