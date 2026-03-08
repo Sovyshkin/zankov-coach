@@ -7,7 +7,7 @@
           <div class="nav-brand">
             <a href="#hero" @click="scrollTo('hero')" class="brand-link">
               <span class="brand-text">Владислав</span>
-              <span class="brand-subtitle">FITNESS COACH</span>
+              <span class="brand-subtitle">Фитнес-тренер</span>
             </a>
           </div>
           <div class="nav-links" :class="{ 'nav-open': isMobileMenuOpen }">
@@ -35,7 +35,7 @@
         <div class="mobile-menu-header">
           <div class="mobile-brand">
             <span class="mobile-brand-text">Владислав</span>
-            <span class="mobile-brand-subtitle">FITNESS COACH</span>
+            <span class="mobile-brand-subtitle">Фитнес-тренер</span>
           </div>
           <button class="mobile-menu-close" @click="isMobileMenuOpen = false">
             <span class="close-line"></span>
@@ -254,7 +254,7 @@
           <div class="footer-brand">
             <div class="brand-logo">
               <h3>Владислав Заньков</h3>
-              <span class="brand-tagline">FITNESS COACH</span>
+              <span class="brand-tagline">Фитнес-тренер</span>
             </div>
             <p class="brand-description">
               Трансформирую тела и жизни с 2020 года. 
@@ -272,7 +272,7 @@
             <h4>Программы</h4>
             <ul class="footer-links">
               <li><a href="#services">Персональные тренировки</a></li>
-              <li><a href="#services">Онлайн-коучинг</a></li>
+              <li><a href="#services">Онлайн-тренировки</a></li>
               <li><a href="#services">Программы питания</a></li>
               <li><a href="#transformations">Трансформации</a></li>
             </ul>
@@ -327,8 +327,8 @@
           <div class="copyright">
             <p>&copy; 2025 Владислав Заньков. Все права защищены.</p>
           </div>
-          <div class="footer-badge">
-            <span class="premium-badge">FITNESS COACH Since 2020</span>
+            <div class="footer-badge">
+            <span class="premium-badge">Фитнес-тренер с 2020 г.</span>
           </div>
         </div>
       </div>
